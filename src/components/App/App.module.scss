@@ -1,0 +1,21 @@
+.field {
+  text-align: center;
+}
+
+svg {
+  margin: auto;
+
+  .value {
+    font-size: 0.4em;
+    fill: #ffffff;
+  }
+
+  g {
+    fill: #b5a89b;
+
+    polygon {
+      stroke: #ece4db;
+      stroke-width: 0.2;
+    }
+  }
+}
