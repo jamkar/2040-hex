@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
 import { useCallback, useEffect, useState } from "react";
-import { DEFAULT_PORT, HOST_PARAM, KEYS, PORT_PARAM, RADIUS_PARAM, keyToAxis } from "../../constants";
+import { DEFAULT_HOST, DEFAULT_PORT, DEFAULT_RADIUS, HOST_PARAM, KEYS, PORT_PARAM, RADIUS_PARAM, keyToAxis } from "../../constants";
 import { useKeyListener as useKeyHandler } from "../../hooks/useKeyListener";
 import { retrieveCells } from "../../services/rngService";
 import { Cell, InitParams, KeyToAxis } from "../../types";
@@ -9,18 +9,18 @@ import View from "./App.view";
 
 export const App = () => {
   const [cells, setCells] = useState<Cell[]>();
-  const [initParams, setInitParams] = useState<InitParams>();
+  const [initParams, setInitParams] = useState<InitParams>({
+    hostname: DEFAULT_HOST,
+    port: DEFAULT_PORT,
+    radius: DEFAULT_RADIUS,
+  });
 
   useKeyHandler(useCallback(onKeyDown, [cells, initParams]));
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const hostname = searchParams.get(HOST_PARAM);
-    const radius = searchParams.get(RADIUS_PARAM);
-    if (!hostname || !radius) {
-      throw new Error("Hostname or radius is not defined");
-    }
-
+    const hostname = searchParams.get(HOST_PARAM) ?? DEFAULT_HOST;
+    const radius = searchParams.get(RADIUS_PARAM) ?? DEFAULT_RADIUS;
     const port = searchParams.get(PORT_PARAM) ?? DEFAULT_PORT;
 
     const params = {

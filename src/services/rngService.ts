@@ -1,11 +1,9 @@
 import { Cell, InitParams } from "../types";
 
-export async function retrieveCells(data: Cell[], initParams?: InitParams): Promise<Cell[]> {
-  if (!initParams) {
-    throw new Error("Initial params are not defined");
-  }
+export async function retrieveCells(data: Cell[], initParams: InitParams): Promise<Cell[]> {
   const { hostname, port, radius } = initParams;
-  const response = await fetch(`http://${hostname}:${port}/${radius}`, {
+
+  const response = await fetch(`${hostname}:${port}/${radius}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
